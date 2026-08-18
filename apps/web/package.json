@@ -1,0 +1,31 @@
+{
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@unite/ui": "workspace:*",
+    "next": "catalog:",
+    "next-sanity": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@unite/config-biome": "workspace:*",
+    "@unite/config-typescript": "workspace:*",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  }
+}

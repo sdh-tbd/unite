@@ -1,0 +1,3 @@
+@import "@unite/config-tailwind/index.css";
+
+@source "../src/**/*.{ts,tsx}";

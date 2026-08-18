@@ -1,0 +1,5 @@
+/* Design tokens shared across the monorepo. Tokens declared here become
+   Tailwind utilities (e.g. --color-brand exposes bg-brand, text-brand). */
+@theme {
+  --color-brand: oklch(0.55 0.2 264);
+}

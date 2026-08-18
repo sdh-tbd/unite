@@ -1,0 +1,4 @@
+/* Shared Tailwind entrypoint. Import this instead of "tailwindcss" so every
+   app and package picks up the same design tokens. */
+@import "tailwindcss";
+@import "./theme.css";

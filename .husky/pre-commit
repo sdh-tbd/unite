@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+# Fast, deterministic, blocking. No network, no LLM.
+
+set -e
+
+if [ -n "$SKIP_HOOKS" ]; then
+  echo "pre-commit: skipped (SKIP_HOOKS set)"
+  exit 0
+fi
+
+echo "pre-commit: biome (staged)"
+pnpm exec biome check --staged --no-errors-on-unmatched
+
+echo "pre-commit: check-types"
+pnpm turbo run check-types --output-logs=errors-only

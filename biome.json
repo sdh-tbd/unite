@@ -1,0 +1,10 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "root": true,
+  "extends": ["@unite/config-biome/base"],
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
+}

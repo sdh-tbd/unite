@@ -1,0 +1,12 @@
+{
+  "extends": "@unite/config-typescript/react-library.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

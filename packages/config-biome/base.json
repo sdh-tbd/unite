@@ -1,0 +1,67 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "files": {
+    "includes": [
+      "**",
+      "!**/.next",
+      "!**/dist",
+      "!**/.turbo",
+      "!**/.sanity",
+      "!**/next-env.d.ts",
+      "!**/sanity.types.ts",
+      "!**/schema.json"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "project": "recommended",
+      "turborepo": "recommended"
+    },
+    "rules": {
+      "preset": "recommended",
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error"
+      },
+      "style": {
+        "noNonNullAssertion": "warn",
+        "useConst": "error"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "asNeeded",
+      "trailingCommas": "all",
+      "arrowParentheses": "always"
+    }
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "tui",
+  "globalPassThroughEnv": ["SKIP_HOOKS", "CI"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "!.next/dev/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "transit": {
+      "dependsOn": ["^transit"]
+    },
+    "lint": {
+      "dependsOn": ["transit"]
+    },
+    "format": {
+      "cache": false
+    },
+    "check-types": {
+      "dependsOn": ["transit"],
+      "outputs": [".tsbuildinfo", "node_modules/.cache/tsbuildinfo.json"]
+    },
+    "test": {
+      "dependsOn": ["transit"]
+    },
+    "//#lint:root": {
+      "inputs": ["*.json", ".*.json", "*.md", "*.mts", "tests/**"]
+    },
+    "//#test:root": {
+      "inputs": ["tests/**", "vitest.config.mts"]
+    },
+    "//#format:root": {
+      "cache": false
+    }
+  }
+}

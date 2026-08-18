@@ -1,0 +1,29 @@
+{
+  "name": "studio",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev --port 3333",
+    "build": "sanity build",
+    "start": "sanity start --port 3333",
+    "deploy": "sanity deploy",
+    "typegen": "sanity schemas extract --force && sanity typegen generate",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sanity/vision": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "sanity": "catalog:",
+    "styled-components": "6.5.3"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@unite/config-biome": "workspace:*",
+    "@unite/config-typescript": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

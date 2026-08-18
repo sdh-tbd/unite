@@ -1,0 +1,16 @@
+node_modules
+.turbo
+dist
+.next
+out
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+!.env.example
+.vercel
+
+# Sanity
+.sanity
+apps/studio/schema.json
+apps/web/sanity.types.ts

@@ -1,0 +1,28 @@
+{
+  "name": "unite",
+  "private": true,
+  "packageManager": "pnpm@10.30.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint lint:root",
+    "format": "turbo run format format:root",
+    "lint:root": "biome check ./*.json ./.*.json ./*.md ./*.mts ./tests --files-ignore-unknown=true",
+    "format:root": "biome check --write ./*.json ./.*.json ./*.md ./*.mts ./tests --files-ignore-unknown=true",
+    "check-types": "turbo run check-types",
+    "test": "turbo run test test:root",
+    "test:root": "vitest run",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@unite/config-biome": "workspace:*",
+    "husky": "^9.1.7",
+    "turbo": "2.10.10",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "root": false,
+  "extends": [
+    "@unite/config-biome/base",
+    "@unite/config-biome/react",
+    "@unite/config-biome/tailwind"
+  ]
+}
