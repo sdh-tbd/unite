@@ -14,3 +14,6 @@ out
 .sanity
 apps/studio/schema.json
 apps/web/sanity.types.ts
+
+# Storybook
+storybook-static

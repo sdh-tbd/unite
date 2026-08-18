@@ -2,8 +2,10 @@
   "extends": "@unite/config-typescript/react-library.json",
   "compilerOptions": {
     "noEmit": true,
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "types": ["node"],
+    "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*", ".storybook/**/*", "vite.config.ts", "vitest.config.ts"],
+  "exclude": ["node_modules", "dist", "storybook-static"]
 }

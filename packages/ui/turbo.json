@@ -3,6 +3,14 @@
   "tasks": {
     "check-types": {
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    },
+    "build-storybook": {
+      "dependsOn": ["transit"],
+      "outputs": ["storybook-static/**"]
     }
   }
 }

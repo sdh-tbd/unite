@@ -4,6 +4,7 @@
   "extends": [
     "@unite/config-biome/base",
     "@unite/config-biome/react",
-    "@unite/config-biome/tailwind"
+    "@unite/config-biome/tailwind",
+    "@unite/config-biome/test"
   ]
 }

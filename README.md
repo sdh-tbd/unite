@@ -9,7 +9,7 @@ apps/
   web/       Next.js 16 (App Router, Cache Components, Tailwind v4)
   studio/    Sanity Studio 6 (standalone, Presentation + Vision)
 packages/
-  ui/        Design system (React 19 + Tailwind v4, JIT/no build step)
+  ui/        Design system (React 19 + Tailwind v4, JIT/no build step) + Storybook
   auth/      Better Auth scaffold (no database wired up yet)
   config-biome/       Shared Biome presets (base, react, next, tailwind, test)
   config-tailwind/    Shared Tailwind v4 entrypoint + design tokens
@@ -28,6 +28,7 @@ shared configs, so a new app only has to extend the presets it needs.
 | Language    | TypeScript 7                          |
 | Lint/format | Biome 2.5 (replaces ESLint + Prettier)|
 | Styling     | Tailwind CSS v4                       |
+| Workshop    | Storybook 10 (React + Vite)           |
 | Auth        | Better Auth 1.7 (scaffold only)       |
 | CMS         | Sanity (project `agp9zi1g`)           |
 
@@ -75,6 +76,37 @@ design tokens in `packages/config-tailwind/src/theme.css` come along:
 
 `@unite/ui` already does this, so apps importing `@unite/ui/styles.css` inherit
 the tokens transitively.
+
+## Storybook
+
+Storybook lives in `@unite/ui` — it is the workshop for the design system, so it
+stays next to the components rather than being its own app.
+
+```bash
+pnpm storybook        # dev server on http://localhost:6006
+pnpm build-storybook  # static build into packages/ui/storybook-static (gitignored)
+```
+
+Stories sit beside their component as `*.stories.tsx` and are picked up from
+`packages/ui/src/**`. `.storybook/preview.ts` imports `src/styles.css`, so every
+story renders with the shared Tailwind tokens.
+
+`packages/ui/vite.config.ts` exists only to give Storybook and Vitest one shared
+Vite pipeline (React + Tailwind plugins). The package itself still ships as
+source with no build step.
+
+**Stories are the component tests.** `@storybook/addon-vitest` turns every story
+export into a Vitest case that renders in real Chromium and runs its `play`
+function, so `pnpm test` covers them with no separate test files. That needs
+Playwright's browser binary once per machine:
+
+```bash
+pnpm --filter @unite/ui exec playwright install chromium
+```
+
+Accessibility checks run through `@storybook/addon-a11y` in `"todo"` mode:
+violations are reported but do not fail the run. Flip `a11y.test` to `"error"`
+in `.storybook/preview.ts` once the component set is clean.
 
 ## Auth
 
@@ -158,6 +190,8 @@ Root scripts delegate to Turborepo; task logic lives in each package.
 | Command             | Description                              |
 | ------------------- | ---------------------------------------- |
 | `pnpm dev`          | Run all dev servers                      |
+| `pnpm storybook`    | Storybook dev server (port 6006)         |
+| `pnpm build-storybook` | Static Storybook build                |
 | `pnpm build`        | Build all packages                       |
 | `pnpm lint`         | Biome check (no writes)                  |
 | `pnpm format`       | Biome check with autofix                 |

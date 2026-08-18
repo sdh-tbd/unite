@@ -8,6 +8,8 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "storybook": "turbo run storybook",
+    "build-storybook": "turbo run build-storybook",
     "lint": "turbo run lint lint:root",
     "format": "turbo run format format:root",
     "lint:root": "biome check ./*.json ./.*.json ./*.md ./*.mts ./tests --files-ignore-unknown=true",
