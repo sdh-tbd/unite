@@ -27,9 +27,16 @@ or hooks.)
 | `next-best-practices`, `next-cache-components` | [vercel-labs/openreview](https://github.com/vercel-labs/openreview) (`.agents/skills/`) |
 | `turborepo` | [vercel/turborepo](https://github.com/vercel/turborepo) (`skills/`) |
 | `sanity-best-practices`, `sanity-migration`, `content-modeling-best-practices`, `content-experimentation-best-practices`, `portable-text-serialization`, `portable-text-conversion`, `seo-aeo-best-practices` | [sanity-io/agent-toolkit](https://github.com/sanity-io/agent-toolkit) |
+| `better-auth-best-practices`, `better-auth-security-best-practices`, `create-auth`, `email-and-password-best-practices`, `organization-best-practices`, `two-factor-authentication-best-practices` | [better-auth/skills](https://github.com/better-auth/skills) |
 | `grill-with-docs`, `to-spec`, `to-tickets`, `implement`, `tdd`, `wayfinder`, `domain-modeling`, `code-review`, `grill-me`, `handoff` | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | `grilling`, `research`, `codebase-design`, `prototype`, `setup-matt-pocock-skills` | [mattpocock/skills](https://github.com/mattpocock/skills) — dependencies of the above |
 | `new-feature` | This repo — the guided path through the skills above |
+
+The Better Auth skills live in a nested plugin layout upstream (`security/` at the root, the
+rest under `better-auth/`) and are flattened here, one directory per skill named after its
+frontmatter `name`. Their file contents are unmodified. The upstream `better-auth/commands/`
+slash commands (`providers`, `explain-error`) are **not** vendored — this repo keeps its
+prompts as skills.
 
 Skills with `disable-model-invocation: true` in their frontmatter (`grill-me`,
 `grill-with-docs`, `handoff`, `implement`, `new-feature`, `setup-matt-pocock-skills`,
