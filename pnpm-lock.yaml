@@ -105,6 +105,9 @@ importers:
         specifier: 6.5.3
         version: 6.5.3(css-to-react-native@3.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
     devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.2.0
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.18
@@ -212,6 +215,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@unite/config-tailwind':
+        specifier: workspace:*
+        version: link:../config-tailwind
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -246,9 +252,6 @@ importers:
       '@unite/config-biome':
         specifier: workspace:*
         version: link:../config-biome
-      '@unite/config-tailwind':
-        specifier: workspace:*
-        version: link:../config-tailwind
       '@unite/config-typescript':
         specifier: workspace:*
         version: link:../config-typescript

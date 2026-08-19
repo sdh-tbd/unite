@@ -12,3 +12,6 @@ export const dataset = required("SANITY_STUDIO_DATASET", process.env.SANITY_STUD
 export const previewUrl = process.env.SANITY_STUDIO_PREVIEW_URL ?? "http://localhost:3000"
 
 export const apiVersion = process.env.SANITY_STUDIO_API_VERSION ?? "2026-08-11"
+
+/** Hosted Studio app id. Empty until the first `sanity deploy`. */
+export const appId = process.env.SANITY_STUDIO_APP_ID

@@ -16,5 +16,10 @@ out
 apps/studio/schema.json
 apps/web/sanity.types.ts
 
+# Test artifacts
+coverage
+playwright-report
+test-results
+
 # Storybook
 storybook-static

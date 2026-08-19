@@ -21,6 +21,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@unite/config-tailwind": "workspace:*",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.6.0"
   },
@@ -34,7 +35,6 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@unite/config-biome": "workspace:*",
-    "@unite/config-tailwind": "workspace:*",
     "@unite/config-typescript": "workspace:*",
     "@vitejs/plugin-react": "^6.0.5",
     "@vitest/browser": "catalog:",
@@ -49,6 +49,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "react": "catalog:peer"
+    "react": "catalog:peer",
+    "react-dom": "catalog:peer"
   }
 }

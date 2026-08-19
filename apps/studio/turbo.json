@@ -7,13 +7,14 @@
         "SANITY_STUDIO_PROJECT_ID",
         "SANITY_STUDIO_DATASET",
         "SANITY_STUDIO_API_VERSION",
-        "SANITY_STUDIO_PREVIEW_URL"
+        "SANITY_STUDIO_PREVIEW_URL",
+        "SANITY_STUDIO_APP_ID"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env", ".env.*"],
       "outputs": ["dist/**"]
     },
     "typegen": {
-      "outputs": ["schema.json", "../web/sanity.types.ts"]
+      "outputs": ["schema.json", "$TURBO_ROOT$/apps/web/sanity.types.ts"]
     },
     "check-types": {
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]

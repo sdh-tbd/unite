@@ -113,7 +113,10 @@ in `.storybook/preview.ts` once the component set is clean.
 `@unite/auth` is a Better Auth scaffold. It has no database adapter and no route
 handler mounted yet, and it deliberately depends on neither React nor
 `@types/node`: it never reads `process.env`, so **apps own their environment**
-and pass resolved values in.
+and pass resolved values in. The package client wraps vanilla
+`better-auth/client` — it has `signIn` / `signUp` / `signOut` / `getSession`,
+not React hooks. When web mounts auth, `apps/web` should create a React client
+with `better-auth/react` itself if it needs `useSession`.
 
 Both entrypoints are factories, so an app can override or extend any Better Auth
 option without forking the package:
@@ -167,7 +170,7 @@ compatibility contract rather than an install — pinning `react` to `19.2.8` in
 
 ## Getting started
 
-Requires Node 24+ (see `.nvmrc`) and pnpm 10.
+Requires Node 26+ (see `.nvmrc`) and pnpm 10.
 
 ```bash
 nvm use
@@ -182,6 +185,26 @@ Web runs on http://localhost:3000, Studio on http://localhost:3333.
 For draft mode / Visual Editing, create a Viewer token in
 [Sanity Manage](https://www.sanity.io/manage/project/agp9zi1g/api) and set
 `SANITY_API_READ_TOKEN` in `apps/web/.env.local`.
+
+## Deploy
+
+**Web** deploys to Vercel from this monorepo. Import the repo and set the
+project Root Directory to `apps/web` (include files outside that directory).
+`apps/web/vercel.json` runs `turbo run build --filter=web` from the repo root
+and skips the build with `turbo-ignore` when web and its dependencies are
+unchanged. Do not set `output: 'standalone'` unless you add Docker.
+
+Set the Sanity public env vars from `apps/web/.env.example` in the Vercel
+project. `SANITY_API_READ_TOKEN` is optional at runtime so published pages work
+without a Viewer token.
+
+**Studio** is not a Vercel app. Deploy it with Sanity hosting:
+
+```bash
+pnpm --filter studio deploy
+```
+
+That runs `sanity deploy`. Auto-updates are enabled in `apps/studio/sanity.cli.ts`.
 
 ## Scripts
 

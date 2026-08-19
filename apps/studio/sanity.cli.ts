@@ -1,9 +1,12 @@
 import { defineCliConfig } from "sanity/cli"
-import { dataset, projectId } from "./src/env"
+import { appId, dataset, projectId } from "./src/env"
 
 export default defineCliConfig({
   api: { projectId, dataset },
-  deployment: { autoUpdates: true },
+  deployment: {
+    autoUpdates: true,
+    ...(appId ? { appId } : {}),
+  },
   typegen: {
     enabled: true,
     path: "../web/src/**/*.{ts,tsx}",
