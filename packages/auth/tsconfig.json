@@ -1,6 +1,7 @@
 {
-  "extends": "@unite/config-typescript/react-library.json",
+  "extends": "@unite/config-typescript/base.json",
   "compilerOptions": {
+    "lib": ["esnext", "dom"],
     "noEmit": true,
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
