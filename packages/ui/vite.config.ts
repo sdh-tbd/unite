@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url"
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import type { UserConfig } from "vite"
@@ -7,6 +8,13 @@ import type { UserConfig } from "vite"
 // Storybook picks it up automatically, and vitest.config.ts merges it in.
 const config: UserConfig = {
   plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      // Untitled UI components import each other through the package's own
+      // name, which mirrors the alias in components.json and tsconfig.json.
+      "@unite/ui": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
 }
 
 export default config

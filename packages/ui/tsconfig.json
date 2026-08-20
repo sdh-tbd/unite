@@ -4,7 +4,10 @@
     "noEmit": true,
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "types": ["node"],
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "@unite/ui/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*", ".storybook/**/*", "vite.config.ts", "vitest.config.ts"],
   "exclude": ["node_modules", "dist", "storybook-static"]

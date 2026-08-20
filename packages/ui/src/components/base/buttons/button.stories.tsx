@@ -17,11 +17,34 @@ type Story = StoryObj<typeof meta>
 export const Primary: Story = {}
 
 export const Secondary: Story = {
-  args: { variant: "secondary" },
+  args: { color: "secondary" },
+}
+
+export const Tertiary: Story = {
+  args: { color: "tertiary" },
+}
+
+export const Destructive: Story = {
+  args: { color: "primary-destructive" },
+}
+
+export const Sizes: Story = {
+  render: (args) => (
+    <div className="flex items-center gap-3">
+      <Button {...args} size="sm" />
+      <Button {...args} size="md" />
+      <Button {...args} size="lg" />
+      <Button {...args} size="xl" />
+    </div>
+  ),
 }
 
 export const Disabled: Story = {
-  args: { disabled: true },
+  args: { isDisabled: true },
+}
+
+export const Loading: Story = {
+  args: { isLoading: true },
 }
 
 export const Clicks: Story = {

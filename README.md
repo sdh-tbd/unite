@@ -9,7 +9,7 @@ apps/
   web/       Next.js 16 (App Router, Cache Components, Tailwind v4)
   studio/    Sanity Studio 6 (standalone, Presentation + Vision)
 packages/
-  ui/        Design system (React 19 + Tailwind v4, JIT/no build step) + Storybook
+  ui/        Design system (Untitled UI React + Tailwind v4, JIT/no build step) + Storybook
   auth/      Better Auth scaffold (no database wired up yet)
   config-biome/       Shared Biome presets (base, react, next, tailwind, test)
   config-tailwind/    Shared Tailwind v4 entrypoint + design tokens
@@ -28,6 +28,7 @@ shared configs, so a new app only has to extend the presets it needs.
 | Language    | TypeScript 7                          |
 | Lint/format | Biome 2.5 (replaces ESLint + Prettier)|
 | Styling     | Tailwind CSS v4                       |
+| Components  | Untitled UI React (copy-paste source)  |
 | Workshop    | Storybook 10 (React + Vite)           |
 | Auth        | Better Auth 1.7 (scaffold only)       |
 | CMS         | Sanity (project `agp9zi1g`)           |
@@ -76,6 +77,48 @@ design tokens in `packages/config-tailwind/src/theme.css` come along:
 
 `@unite/ui` already does this, so apps importing `@unite/ui/styles.css` inherit
 the tokens transitively.
+
+## Untitled UI
+
+`@unite/ui` is built on [Untitled UI React](https://www.untitledui.com/react),
+which is copy-paste source rather than a runtime dependency: the CLI writes
+component files into the repo and we own them from then on.
+
+The setup follows Untitled UI's
+[monorepo guide](https://www.untitledui.com/react/integrations/monorepo) with
+one deviation — the generated `globals.css`, `theme.css` and `typography.css`
+live in `packages/config-tailwind/src/` instead of the UI package, so
+`@unite/config-tailwind` stays the single source of design tokens for the whole
+monorepo. The Tailwind plugins those files need
+(`@tailwindcss/typography`, `tailwindcss-animate`,
+`tailwindcss-react-aria-components`) are dependencies of `@unite/config-tailwind`
+because `@plugin` resolves relative to the CSS file that declares it.
+
+Add components from inside the UI package:
+
+```bash
+cd packages/ui
+pnpm dlx untitledui@latest add <component>
+```
+
+`packages/ui/components.json` tells the CLI which import aliases to generate,
+and `tsconfig.json` maps `@unite/ui/*` to `./src/*` so it can resolve them.
+Components therefore import each other through the package's own name
+(`@unite/ui/utils/cx`), which resolves via the package `exports` map for
+consumers, via `paths` for `tsc`, and via a `resolve.alias` in
+`packages/ui/vite.config.ts` for Storybook and Vitest.
+
+Three things need doing by hand after `add`:
+
+- Install the component's peer packages with `pnpm add`. The CLI shells out to
+  `npm install`, which fails on this workspace's `workspace:` protocol deps.
+- Run `pnpm format` — generated files use Untitled UI's own style, and the repo
+  formats them like everything else.
+- Add `"use client"` to any component built on `react-aria-components`, since
+  `@unite/ui` is consumed by React Server Components in `apps/web`.
+
+See [`AGENTS.md`](./AGENTS.md) for the client-boundary rules that keep server-rendered
+HTML intact and `react-aria` out of the bundle when it isn't used.
 
 ## Storybook
 

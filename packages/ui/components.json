@@ -1,0 +1,9 @@
+{
+  "aliases": {
+    "components": "@unite/ui/components",
+    "utils": "@unite/ui/utils",
+    "styles": "@unite/config-tailwind",
+    "hooks": "@unite/ui/hooks"
+  },
+  "examples": "../../apps/web"
+}
