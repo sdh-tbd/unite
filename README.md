@@ -298,6 +298,11 @@ export const PAGE_QUERY = defineQuery(`*[_type == "page" && slug.current == $slu
   `turborepo` lint domain enforces this.
 - No root `.env`; each app owns its own env files.
 - Shared code belongs in `packages/`, never inside an app.
+- Functions are declared with `function`, not assigned to a `const` as an arrow. Callbacks
+  and single-expression one-liners are exempt. Enforced by the GritQL plugin at
+  `packages/config-biome/plugins/use-function-declaration.grit` plus
+  `nursery/useReactFunctionComponentDefinition`, both wired up in
+  `@unite/config-biome/base`. See [`AGENTS.md`](./AGENTS.md) for the rationale.
 
 ## Code review
 

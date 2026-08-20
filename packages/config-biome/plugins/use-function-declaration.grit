@@ -1,0 +1,41 @@
+language js
+
+// Enforce function declarations over functions assigned to a `const` binding.
+//
+// Rationale: `const foo = () => {}` does not declare a function, it declares a
+// variable that happens to hold an anonymous function. `function foo() {}`
+// declares a function: it is hoisted, it always carries its own name in stack
+// traces, and it reads as the definition it is.
+//
+// Deliberately NOT flagged, because these are not function declarations:
+//   - Callbacks:            items.map((item) => item.id)
+//   - Expression bodies:    const double = (x) => x * 2
+//   - Object/class methods: { onClick: () => {} }
+//   - Wrapped values:       const memo = useCallback(() => {}, [])
+//
+// Biome has no built-in `func-style` rule, so this is a GritQL plugin.
+// The `r"\{[\s\S]*"` guard matches an arrow body that starts with `{`, which is
+// how a block body is told apart from an expression body.
+
+pattern block_bodied_arrow($name) {
+  or {
+    `const $name = $init`,
+    `const $name: $type = $init`
+  } where { $init <: arrow_function(body=$body), $body <: r"\{[\s\S]*" }
+}
+
+pattern assigned_function_expression($name) {
+  or {
+    `const $name = function ($params) { $... }`,
+    `const $name = function $fnName($params) { $... }`,
+    `const $name: $type = function ($params) { $... }`,
+    `const $name: $type = function $fnName($params) { $... }`
+  }
+}
+
+or {
+  block_bodied_arrow($name),
+  assigned_function_expression($name)
+} where {
+  register_diagnostic(span=$name, message="Use a function declaration (`function name() {}`) instead of assigning a function to a `const`. Callbacks and single-expression arrows are exempt.")
+}

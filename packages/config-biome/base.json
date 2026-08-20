@@ -1,5 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "plugins": ["./node_modules/@unite/config-biome/plugins/use-function-declaration.grit"],
   "files": {
     "includes": [
       "**",

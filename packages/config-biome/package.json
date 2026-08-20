@@ -15,7 +15,8 @@
     "react.json",
     "next.json",
     "tailwind.json",
-    "test.json"
+    "test.json",
+    "plugins"
   ],
   "scripts": {
     "lint": "biome check .",

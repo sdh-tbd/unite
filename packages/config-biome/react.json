@@ -3,6 +3,16 @@
   "linter": {
     "domains": {
       "react": "recommended"
+    },
+    "rules": {
+      "nursery": {
+        "useReactFunctionComponentDefinition": {
+          "level": "error",
+          "options": {
+            "namedComponents": "functionDeclaration"
+          }
+        }
+      }
     }
   }
 }

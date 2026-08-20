@@ -62,6 +62,71 @@ the boundary already holds.
 wherever press handling, focus rings, loading state or the `href` link variant are used. On
 non-interactive marketing furniture it is pure hydration cost, which pressures INP.
 
+## Function declarations over arrow function variables
+
+**Declare functions with `function`, not by assigning an arrow to a `const`.**
+`const foo = () => {}` does not declare a function — it declares a variable that happens
+to hold an anonymous function. `function foo() {}` declares a function: it hoists, so
+call order in a module stops mattering, and it always carries its own name rather than
+borrowing one from the binding via JS name inference.
+
+```ts
+// Yes
+export function formatPrice(cents: number) {
+  return `$${(cents / 100).toFixed(2)}`
+}
+
+// No
+export const formatPrice = (cents: number) => {
+  return `$${(cents / 100).toFixed(2)}`
+}
+```
+
+React components follow the same rule — `function Button(props: ButtonProps)`, never
+`const Button = (props: ButtonProps) => {}`. This includes components whose body is a
+single JSX expression.
+
+Arrow functions are still correct in the positions where no function is being *declared*:
+
+```ts
+items.map((item) => item.id)          // callback
+const double = (x: number) => x * 2   // single-expression one-liner
+useCallback(() => setOpen(false), []) // inline callback
+{ onSelect: () => close() }           // object property
+```
+
+The line is whether the function is being *declared* or *passed*. A callback is passed.
+A block-bodied arrow bound to a name is a declaration wearing the wrong clothes.
+
+Two things enforce this, because Biome has no built-in `func-style` rule:
+
+- `packages/config-biome/plugins/use-function-declaration.grit` — a GritQL plugin
+  covering all block-bodied arrows and function expressions assigned to a `const`.
+- `nursery/useReactFunctionComponentDefinition` in `@unite/config-biome/react`, which
+  additionally catches expression-bodied React components.
+
+Neither has an autofix, so fix them by hand.
+
+The plugin is declared once, in `@unite/config-biome/base`:
+
+```jsonc
+"plugins": ["./node_modules/@unite/config-biome/plugins/use-function-declaration.grit"]
+```
+
+Biome resolves a plugin path against the directory of the config that *consumes* the
+`extends`, not the directory of the config that declares the path. Because pnpm links
+`@unite/config-biome` into the `node_modules` of every package that extends it, that one
+relative path resolves correctly from every package. A new package needs no `plugins`
+entry of its own — just `extends: ["@unite/config-biome/base"]`.
+
+The one place this cannot work is `packages/config-biome` itself, which has no
+`node_modules` link back to itself. **It deliberately has no `biome.json`** and is linted
+by the root config instead. Don't add one back — a nested `plugins` array merges with the
+inherited one rather than replacing it, so it cannot paper over the broken path.
+
+Verify with `pnpm lint` — an unresolvable plugin surfaces as `Cannot read file.`, not as a
+silently skipped rule.
+
 ## Agent skills
 
 ### Issue tracker
