@@ -172,10 +172,9 @@ export interface LinkProps extends CommonProps, Omit<AriaLinkProps, "children" |
 /** Union type of button and link props */
 export type Props = ButtonProps | LinkProps
 
-export const Button: {
-  (props: LinkProps): ReactElement<LinkProps>
-  (props: ButtonProps): ReactElement<ButtonProps>
-} = ({
+export function Button(props: LinkProps): ReactElement<LinkProps>
+export function Button(props: ButtonProps): ReactElement<ButtonProps>
+export function Button({
   size = "sm",
   color = "primary",
   children,
@@ -187,7 +186,7 @@ export const Button: {
   isLoading: loading,
   showTextWhileLoading,
   ...props
-}) => {
+}: Props) {
   const href = "href" in props ? props.href : undefined
 
   const isIcon = (IconLeading || IconTrailing) && !children
